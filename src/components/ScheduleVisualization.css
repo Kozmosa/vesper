@@ -1,0 +1,73 @@
+.schedule-visualization {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.visualization-header {
+  margin-bottom: 1.5rem;
+}
+
+.visualization-header h2 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.analysis-summary {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summary-item .label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.summary-item .value {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.visualization-empty {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legend {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.legend-color {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 2px;
+}
+
+.legend-color.occupied {
+  background: #ddd;
+  border: 1px solid #ccc;
+}
