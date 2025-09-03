@@ -1,0 +1,56 @@
+{
+  "app": {
+    "title": "Course Schedule Analyzer",
+    "settings": "Settings"
+  },
+  "fileUpload": {
+    "dropFiles": "Drop schedule files here or click to browse",
+    "supportedFormats": "Supports .wakeup_schedule and .json files",
+    "loadedSchedules": "Loaded Schedules",
+    "courses": "courses",
+    "entries": "entries",
+    "removeSchedule": "Remove schedule"
+  },
+  "storagePermission": {
+    "title": "Local Storage Permission",
+    "description": "This application can save your uploaded schedules and preferences locally for your convenience. This data never leaves your device.",
+    "storedData": "What will be stored:",
+    "dataList": {
+      "schedules": "Processed schedule data",
+      "settings": "Application settings and preferences",
+      "noPersonalInfo": "No personal information beyond what you upload"
+    },
+    "decline": "No, thanks",
+    "accept": "Allow local storage"
+  },
+  "configPanel": {
+    "title": "Settings",
+    "visualSettings": "Visual Settings",
+    "showWeekends": "Show weekends",
+    "showGridLines": "Show grid lines",
+    "showTimeLabels": "Show time labels",
+    "timeFormat": "Time format",
+    "timeFormat24h": "24 hour",
+    "timeFormat12h": "12 hour",
+    "highlightColor": "Free time highlight color",
+    "freeTimeOpacity": "Free time opacity",
+    "dataSettings": "Data Settings",
+    "autoSave": "Auto-save changes",
+    "maxStoredSchedules": "Max stored schedules",
+    "cancel": "Cancel",
+    "save": "Save Changes"
+  },
+  "scheduleVisualization": {
+    "uploadPrompt": "Upload schedule files to see the visualization",
+    "title": "Weekly Schedule Analysis",
+    "schedules": "Schedules",
+    "freePeriods": "Free Time Periods",
+    "timeRange": "Time Range",
+    "occupiedTime": "Occupied Time",
+    "freeTime": "Free Time (All Schedules)"
+  },
+  "dayColumn": {
+    "freeTime": "Free time",
+    "free": "Free"
+  }
+}

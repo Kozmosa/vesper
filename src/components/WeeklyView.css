@@ -11,17 +11,28 @@
   min-height: 500px;
 }
 
-.time-labels {
-  position: relative;
+.time-axis {
   width: 80px;
   background: #f8f9fa;
   border-right: 1px solid #ddd;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .time-label-header {
   height: 40px;
   border-bottom: 1px solid #ddd;
+}
+
+.time-labels-container {
+  flex: 1;
+  position: relative;
+}
+
+.time-labels {
+  position: relative;
+  height: 100%;
 }
 
 .time-label {

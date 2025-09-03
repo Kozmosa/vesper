@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ProcessedSchedule } from '../types';
 import './FileUpload.css';
 
@@ -13,6 +14,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   existingSchedules,
   onRemoveSchedule
 }) => {
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
 
@@ -25,7 +27,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     );
 
     if (validFiles.length === 0) {
-      alert('Please select valid schedule files (.wakeup_schedule or .json)');
+      alert(t('fileUpload.supportedFormats'));
       return;
     }
 
@@ -60,8 +62,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({
         >
           <div className="upload-icon">📁</div>
           <div className="upload-text">
-            <p>Drop schedule files here or click to browse</p>
-            <p className="upload-hint">Supports .wakeup_schedule and .json files</p>
+            <p>{t('fileUpload.dropFiles')}</p>
+            <p className="upload-hint">{t('fileUpload.supportedFormats')}</p>
           </div>
           <input
             ref={fileInputRef}
@@ -76,7 +78,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
 
       {existingSchedules.length > 0 && (
         <div className="existing-schedules">
-          <h3>Loaded Schedules ({existingSchedules.length})</h3>
+          <h3>{t('fileUpload.loadedSchedules')} ({existingSchedules.length})</h3>
           <div className="schedule-list">
             {existingSchedules.map(schedule => (
               <div key={schedule.id} className="schedule-item">
@@ -84,14 +86,14 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                   <div className="schedule-name">{schedule.tableName}</div>
                   <div className="schedule-filename">{schedule.fileName}</div>
                   <div className="schedule-meta">
-                    {schedule.courses.length} courses, 
-                    {schedule.scheduleEntries.length} entries
+                    {schedule.courses.length} {t('fileUpload.courses')}, 
+                    {schedule.scheduleEntries.length} {t('fileUpload.entries')}
                   </div>
                 </div>
                 <button
                   className="remove-button"
                   onClick={() => onRemoveSchedule(schedule.id)}
-                  title="Remove schedule"
+                  title={t('fileUpload.removeSchedule')}
                 >
                   ✕
                 </button>

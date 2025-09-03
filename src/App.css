@@ -18,6 +18,12 @@
   font-size: 1.5rem;
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .config-button {
   background: #007bff;
   color: white;

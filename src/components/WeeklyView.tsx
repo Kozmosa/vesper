@@ -38,24 +38,28 @@ export const WeeklyView: React.FC<WeeklyViewProps> = ({
     <div className="weekly-view">
       <div className="weekly-grid">
         {config.showTimeLabels && (
-          <div className="time-labels">
+          <div className="time-axis">
             <div className="time-label-header"></div>
-            {timeLabels.map((time, index) => {
-              const position = ((time.getTime() - bounds.earliestStart.getTime()) / (1000 * 60)) / bounds.totalMinutes * 100;
-              return (
-                <div
-                  key={index}
-                  className="time-label"
-                  style={{ top: `${position}%` }}
-                >
-                  {time.toLocaleTimeString([], { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: config.timeFormat === '12h'
-                  })}
-                </div>
-              );
-            })}
+            <div className="time-labels-container">
+              <div className="time-labels">
+                {timeLabels.map((time, index) => {
+                  const position = ((time.getTime() - bounds.earliestStart.getTime()) / (1000 * 60)) / bounds.totalMinutes * 100;
+                  return (
+                    <div
+                      key={index}
+                      className="time-label"
+                      style={{ top: `${position}%` }}
+                    >
+                      {time.toLocaleTimeString([], { 
+                        hour: '2-digit', 
+                        minute: '2-digit',
+                        hour12: config.timeFormat === '12h'
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
 

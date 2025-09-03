@@ -1,0 +1,56 @@
+{
+  "app": {
+    "title": "课程表分析器",
+    "settings": "设置"
+  },
+  "fileUpload": {
+    "dropFiles": "拖放课表文件到这里或点击浏览",
+    "supportedFormats": "支持 .wakeup_schedule 和 .json 文件",
+    "loadedSchedules": "已加载的课表",
+    "courses": "课程",
+    "entries": "条目",
+    "removeSchedule": "移除课表"
+  },
+  "storagePermission": {
+    "title": "本地存储权限",
+    "description": "为了方便起见，此应用程序可以在本地保存您上传的课表和偏好设置。这些数据永远不会离开您的设备。",
+    "storedData": "将存储的内容：",
+    "dataList": {
+      "schedules": "处理后的课表数据",
+      "settings": "应用程序设置和偏好",
+      "noPersonalInfo": "除了您上传的内容外，不存储任何个人信息"
+    },
+    "decline": "不，谢谢",
+    "accept": "允许本地存储"
+  },
+  "configPanel": {
+    "title": "设置",
+    "visualSettings": "视觉设置",
+    "showWeekends": "显示周末",
+    "showGridLines": "显示网格线",
+    "showTimeLabels": "显示时间标签",
+    "timeFormat": "时间格式",
+    "timeFormat24h": "24小时制",
+    "timeFormat12h": "12小时制",
+    "highlightColor": "空闲时间高亮颜色",
+    "freeTimeOpacity": "空闲时间透明度",
+    "dataSettings": "数据设置",
+    "autoSave": "自动保存更改",
+    "maxStoredSchedules": "最大存储课表数",
+    "cancel": "取消",
+    "save": "保存更改"
+  },
+  "scheduleVisualization": {
+    "uploadPrompt": "上传课表文件以查看可视化效果",
+    "title": "周课表分析",
+    "schedules": "课表",
+    "freePeriods": "空闲时间段",
+    "timeRange": "时间范围",
+    "occupiedTime": "占用时间",
+    "freeTime": "空闲时间（所有课表）"
+  },
+  "dayColumn": {
+    "freeTime": "空闲时间",
+    "free": "空闲"
+  }
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './StoragePermission.css';
 
 interface StoragePermissionProps {
@@ -8,21 +9,21 @@ interface StoragePermissionProps {
 export const StoragePermission: React.FC<StoragePermissionProps> = ({
   onPermissionChange
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="storage-permission-modal">
       <div className="modal-backdrop" />
       <div className="modal-content">
-        <h3>Local Storage Permission</h3>
+        <h3>{t('storagePermission.title')}</h3>
         <p>
-          This application can save your uploaded schedules and preferences locally 
-          for your convenience. This data never leaves your device.
+          {t('storagePermission.description')}
         </p>
         <div className="permission-details">
-          <h4>What will be stored:</h4>
+          <h4>{t('storagePermission.storedData')}</h4>
           <ul>
-            <li>Processed schedule data</li>
-            <li>Application settings and preferences</li>
-            <li>No personal information beyond what you upload</li>
+            <li>{t('storagePermission.dataList.schedules')}</li>
+            <li>{t('storagePermission.dataList.settings')}</li>
+            <li>{t('storagePermission.dataList.noPersonalInfo')}</li>
           </ul>
         </div>
         <div className="modal-actions">
@@ -30,13 +31,13 @@ export const StoragePermission: React.FC<StoragePermissionProps> = ({
             className="button secondary"
             onClick={() => onPermissionChange(false)}
           >
-            No, thanks
+            {t('storagePermission.decline')}
           </button>
           <button 
             className="button primary"
             onClick={() => onPermissionChange(true)}
           >
-            Allow local storage
+            {t('storagePermission.accept')}
           </button>
         </div>
       </div>

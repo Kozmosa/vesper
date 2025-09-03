@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AppConfig } from '../types';
 import './ConfigPanel.css';
 
@@ -13,6 +14,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
   onConfigUpdate,
   onClose
 }) => {
+  const { t } = useTranslation();
   const [localConfig, setLocalConfig] = useState<AppConfig>(config);
 
   const handleSave = () => {
@@ -45,13 +47,13 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
       <div className="modal-backdrop" onClick={onClose} />
       <div className="config-panel">
         <div className="config-header">
-          <h3>Settings</h3>
+          <h3>{t('configPanel.title')}</h3>
           <button className="close-button" onClick={onClose}>✕</button>
         </div>
 
         <div className="config-content">
           <div className="config-section">
-            <h4>Visual Settings</h4>
+            <h4>{t('configPanel.visualSettings')}</h4>
             
             <div className="config-item">
               <label className="checkbox-label">
@@ -60,7 +62,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   checked={localConfig.visualConfig.showWeekends}
                   onChange={(e) => updateVisualConfig('showWeekends', e.target.checked)}
                 />
-                Show weekends
+                {t('configPanel.showWeekends')}
               </label>
             </div>
 
@@ -71,7 +73,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   checked={localConfig.visualConfig.gridLines}
                   onChange={(e) => updateVisualConfig('gridLines', e.target.checked)}
                 />
-                Show grid lines
+                {t('configPanel.showGridLines')}
               </label>
             </div>
 
@@ -82,26 +84,26 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   checked={localConfig.visualConfig.showTimeLabels}
                   onChange={(e) => updateVisualConfig('showTimeLabels', e.target.checked)}
                 />
-                Show time labels
+                {t('configPanel.showTimeLabels')}
               </label>
             </div>
 
             <div className="config-item">
               <label>
-                Time format:
+                {t('configPanel.timeFormat')}:
                 <select
                   value={localConfig.visualConfig.timeFormat}
                   onChange={(e) => updateVisualConfig('timeFormat', e.target.value)}
                 >
-                  <option value="24h">24 hour</option>
-                  <option value="12h">12 hour</option>
+                  <option value="24h">{t('configPanel.timeFormat24h')}</option>
+                  <option value="12h">{t('configPanel.timeFormat12h')}</option>
                 </select>
               </label>
             </div>
 
             <div className="config-item">
               <label>
-                Free time highlight color:
+                {t('configPanel.highlightColor')}:
                 <input
                   type="color"
                   value={localConfig.visualConfig.highlightColor}
@@ -112,7 +114,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
             <div className="config-item">
               <label>
-                Free time opacity: {Math.round(localConfig.visualConfig.freeTimeOpacity * 100)}%
+                {t('configPanel.freeTimeOpacity')}: {Math.round(localConfig.visualConfig.freeTimeOpacity * 100)}%
                 <input
                   type="range"
                   min="0.1"
@@ -126,7 +128,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           </div>
 
           <div className="config-section">
-            <h4>Data Settings</h4>
+            <h4>{t('configPanel.dataSettings')}</h4>
             
             <div className="config-item">
               <label className="checkbox-label">
@@ -135,13 +137,13 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   checked={localConfig.dataConfig.autoSave}
                   onChange={(e) => updateDataConfig('autoSave', e.target.checked)}
                 />
-                Auto-save changes
+                {t('configPanel.autoSave')}
               </label>
             </div>
 
             <div className="config-item">
               <label>
-                Max stored schedules:
+                {t('configPanel.maxStoredSchedules')}:
                 <input
                   type="number"
                   min="1"
@@ -156,10 +158,10 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
         <div className="config-actions">
           <button className="button secondary" onClick={onClose}>
-            Cancel
+            {t('configPanel.cancel')}
           </button>
           <button className="button primary" onClick={handleSave}>
-            Save Changes
+            {t('configPanel.save')}
           </button>
         </div>
       </div>

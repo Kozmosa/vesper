@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FileUpload } from './components/FileUpload';
 import { ScheduleVisualization } from './components/ScheduleVisualization';
 import { StoragePermission } from './components/StoragePermission';
 import { ConfigPanel } from './components/ConfigPanel';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { ScheduleProcessor } from './utils/ScheduleProcessor';
 import { StorageManager } from './utils/StorageManager';
 import { AppConfig, ProcessedSchedule, RawScheduleData } from './types';
 import './App.css';
+
+// 初始化i18n
+import './i18n/config';
 
 const defaultConfig: AppConfig = {
   visualConfig: {
@@ -25,6 +30,7 @@ const defaultConfig: AppConfig = {
 };
 
 function App() {
+  const { t } = useTranslation();
   const [schedules, setSchedules] = useState<ProcessedSchedule[]>([]);
   const [config, setConfig] = useState<AppConfig>(defaultConfig);
   const [storagePermissionGranted, setStoragePermissionGranted] = useState<boolean | null>(null);
@@ -79,7 +85,7 @@ function App() {
       }
     } catch (error) {
       console.error('Error processing files:', error);
-      alert('Error processing schedule files. Please check the file format.');
+      alert(t('fileUpload.supportedFormats'));
     }
   };
 
@@ -103,13 +109,16 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Course Schedule Analyzer</h1>
-        <button 
-          className="config-button"
-          onClick={() => setShowConfigPanel(!showConfigPanel)}
-        >
-          ⚙️ Settings
-        </button>
+        <h1>{t('app.title')}</h1>
+        <div className="header-controls">
+          <LanguageSwitcher />
+          <button 
+            className="config-button"
+            onClick={() => setShowConfigPanel(!showConfigPanel)}
+          >
+            ⚙️ {t('app.settings')}
+          </button>
+        </div>
       </header>
 
       {storagePermissionGranted === null && (

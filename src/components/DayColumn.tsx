@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ProcessedSchedule, VisualConfig, TimeRange, VisualizationBounds } from '../types';
 import './DayColumn.css';
 
@@ -17,6 +18,7 @@ export const DayColumn: React.FC<DayColumnProps> = ({
   bounds,
   config
 }) => {
+  const { t } = useTranslation();
   const calculatePosition = (time: Date) => {
     const offsetMinutes = (time.getTime() - bounds.earliestStart.getTime()) / (1000 * 60);
     return (offsetMinutes / bounds.totalMinutes) * 100;
@@ -57,11 +59,10 @@ export const DayColumn: React.FC<DayColumnProps> = ({
               height: `${calculateHeight(entry.startTime, entry.endTime)}%`,
               backgroundColor: entry.color,
             }}
-            title={`${entry.courseName}\n${entry.teacher}\n${entry.room}`}
+            title={`${entry.courseName}\n${entry.room}`}
           >
             <div className="course-name">{entry.courseName}</div>
             <div className="course-details">
-              <div className="teacher">{entry.teacher}</div>
               <div className="room">{entry.room}</div>
             </div>
           </div>
@@ -78,9 +79,9 @@ export const DayColumn: React.FC<DayColumnProps> = ({
               backgroundColor: config.highlightColor,
               opacity: config.freeTimeOpacity,
             }}
-            title={`Free time: ${range.startTime.toLocaleTimeString()} - ${range.endTime.toLocaleTimeString()}`}
+            title={`${t('dayColumn.freeTime')}: ${range.startTime.toLocaleTimeString()} - ${range.endTime.toLocaleTimeString()}`}
           >
-            <div className="free-label">Free</div>
+            <div className="free-label">{t('dayColumn.free')}</div>
           </div>
         ))}
       </div>

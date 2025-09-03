@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ProcessedSchedule, VisualConfig, FreeTimeIntersection } from '../types';
 import { ScheduleProcessor } from '../utils/ScheduleProcessor';
 import { WeeklyView } from './WeeklyView';
@@ -13,6 +14,7 @@ export const ScheduleVisualization: React.FC<ScheduleVisualizationProps> = ({
   schedules,
   config
 }) => {
+  const { t } = useTranslation();
   const processor = new ScheduleProcessor();
 
   const { freeTimeIntersections, visualizationBounds } = useMemo(() => {
@@ -25,7 +27,7 @@ export const ScheduleVisualization: React.FC<ScheduleVisualizationProps> = ({
   if (schedules.length === 0) {
     return (
       <div className="visualization-empty">
-        <p>Upload schedule files to see the visualization</p>
+        <p>{t('scheduleVisualization.uploadPrompt')}</p>
       </div>
     );
   }
@@ -33,20 +35,20 @@ export const ScheduleVisualization: React.FC<ScheduleVisualizationProps> = ({
   return (
     <div className="schedule-visualization">
       <div className="visualization-header">
-        <h2>Weekly Schedule Analysis</h2>
+        <h2>{t('scheduleVisualization.title')}</h2>
         <div className="analysis-summary">
           <div className="summary-item">
-            <span className="label">Schedules:</span>
+            <span className="label">{t('scheduleVisualization.schedules')}:</span>
             <span className="value">{schedules.length}</span>
           </div>
           <div className="summary-item">
-            <span className="label">Free Time Periods:</span>
+            <span className="label">{t('scheduleVisualization.freePeriods')}:</span>
             <span className="value">
               {freeTimeIntersections.reduce((total, day) => total + day.timeRanges.length, 0)}
             </span>
           </div>
           <div className="summary-item">
-            <span className="label">Time Range:</span>
+            <span className="label">{t('scheduleVisualization.timeRange')}:</span>
             <span className="value">
               {visualizationBounds.earliestStart.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               {' - '}
@@ -66,11 +68,11 @@ export const ScheduleVisualization: React.FC<ScheduleVisualizationProps> = ({
       <div className="legend">
         <div className="legend-item">
           <div className="legend-color occupied"></div>
-          <span>Occupied Time</span>
+          <span>{t('scheduleVisualization.occupiedTime')}</span>
         </div>
         <div className="legend-item">
           <div className="legend-color free" style={{ backgroundColor: config.highlightColor, opacity: config.freeTimeOpacity }}></div>
-          <span>Free Time (All Schedules)</span>
+          <span>{t('scheduleVisualization.freeTime')}</span>
         </div>
       </div>
     </div>
