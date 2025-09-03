@@ -4,6 +4,10 @@ import { AppConfig, ColorScheme } from '../types';
 import { getAvailableColorSchemes } from '../utils/ColorSchemeManager';
 import './ConfigPanel.css';
 
+// 引入Ant Design组件
+import { Switch, ColorPicker, Slider, Select, InputNumber, Button } from 'antd';
+import type { SliderSingleProps } from 'antd';
+
 interface ConfigPanelProps {
   config: AppConfig;
   onConfigUpdate: (config: AppConfig) => void;
@@ -43,6 +47,13 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
     }));
   };
 
+  // Slider marks for free time opacity
+  const opacityMarks: SliderSingleProps['marks'] = {
+    0.1: '10%',
+    0.5: '50%',
+    1: '100%'
+  };
+
   return (
     <div className="config-panel-modal">
       <div className="modal-backdrop" onClick={onClose} />
@@ -58,10 +69,9 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
             
             <div className="config-item">
               <label className="checkbox-label">
-                <input
-                  type="checkbox"
+                <Switch
                   checked={localConfig.visualConfig.showWeekends}
-                  onChange={(e) => updateVisualConfig('showWeekends', e.target.checked)}
+                  onChange={(checked) => updateVisualConfig('showWeekends', checked)}
                 />
                 {t('configPanel.showWeekends')}
               </label>
@@ -69,10 +79,9 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
             <div className="config-item">
               <label className="checkbox-label">
-                <input
-                  type="checkbox"
+                <Switch
                   checked={localConfig.visualConfig.gridLines}
-                  onChange={(e) => updateVisualConfig('gridLines', e.target.checked)}
+                  onChange={(checked) => updateVisualConfig('gridLines', checked)}
                 />
                 {t('configPanel.showGridLines')}
               </label>
@@ -80,10 +89,9 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
 
             <div className="config-item">
               <label className="checkbox-label">
-                <input
-                  type="checkbox"
+                <Switch
                   checked={localConfig.visualConfig.showTimeLabels}
-                  onChange={(e) => updateVisualConfig('showTimeLabels', e.target.checked)}
+                  onChange={(checked) => updateVisualConfig('showTimeLabels', checked)}
                 />
                 {t('configPanel.showTimeLabels')}
               </label>
@@ -92,39 +100,40 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
             <div className="config-item">
               <label>
                 {t('configPanel.timeFormat')}:
-                <select
+                <Select
                   value={localConfig.visualConfig.timeFormat}
-                  onChange={(e) => updateVisualConfig('timeFormat', e.target.value as '12h' | '24h')}
+                  onChange={(value) => updateVisualConfig('timeFormat', value)}
+                  style={{ width: 120 }}
                 >
-                  <option value="24h">{t('configPanel.timeFormat24h')}</option>
-                  <option value="12h">{t('configPanel.timeFormat12h')}</option>
-                </select>
+                  <Select.Option value="24h">{t('configPanel.timeFormat24h')}</Select.Option>
+                  <Select.Option value="12h">{t('configPanel.timeFormat12h')}</Select.Option>
+                </Select>
               </label>
             </div>
 
             <div className="config-item">
               <label>
                 {t('configPanel.colorScheme')}:
-                <select
+                <Select
                   value={localConfig.visualConfig.colorScheme}
-                  onChange={(e) => updateVisualConfig('colorScheme', e.target.value as ColorScheme)}
+                  onChange={(value) => updateVisualConfig('colorScheme', value)}
+                  style={{ width: 120 }}
                 >
                   {getAvailableColorSchemes().map(scheme => (
-                    <option key={scheme.id} value={scheme.id}>
+                    <Select.Option key={scheme.id} value={scheme.id}>
                       {t(`configPanel.colorSchemes.${scheme.id}`)}
-                    </option>
+                    </Select.Option>
                   ))}
-                </select>
+                </Select>
               </label>
             </div>
 
             <div className="config-item">
               <label>
                 {t('configPanel.highlightColor')}:
-                <input
-                  type="color"
+                <ColorPicker
                   value={localConfig.visualConfig.highlightColor}
-                  onChange={(e) => updateVisualConfig('highlightColor', e.target.value)}
+                  onChange={(value) => updateVisualConfig('highlightColor', value.toHexString())}
                 />
               </label>
             </div>
@@ -132,13 +141,13 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
             <div className="config-item">
               <label>
                 {t('configPanel.freeTimeOpacity')}: {Math.round(localConfig.visualConfig.freeTimeOpacity * 100)}%
-                <input
-                  type="range"
-                  min="0.1"
-                  max="1"
-                  step="0.1"
+                <Slider
+                  min={0.1}
+                  max={1}
+                  step={0.1}
                   value={localConfig.visualConfig.freeTimeOpacity}
-                  onChange={(e) => updateVisualConfig('freeTimeOpacity', parseFloat(e.target.value))}
+                  onChange={(value) => updateVisualConfig('freeTimeOpacity', value)}
+                  marks={opacityMarks}
                 />
               </label>
             </div>
@@ -149,10 +158,9 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
             
             <div className="config-item">
               <label className="checkbox-label">
-                <input
-                  type="checkbox"
+                <Switch
                   checked={localConfig.dataConfig.autoSave}
-                  onChange={(e) => updateDataConfig('autoSave', e.target.checked)}
+                  onChange={(checked) => updateDataConfig('autoSave', checked)}
                 />
                 {t('configPanel.autoSave')}
               </label>
@@ -161,12 +169,11 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
             <div className="config-item">
               <label>
                 {t('configPanel.maxStoredSchedules')}:
-                <input
-                  type="number"
-                  min="1"
-                  max="50"
+                <InputNumber
+                  min={1}
+                  max={50}
                   value={localConfig.dataConfig.maxStoredSchedules}
-                  onChange={(e) => updateDataConfig('maxStoredSchedules', parseInt(e.target.value))}
+                  onChange={(value) => updateDataConfig('maxStoredSchedules', value)}
                 />
               </label>
             </div>
@@ -174,12 +181,12 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
         </div>
 
         <div className="config-actions">
-          <button className="button secondary" onClick={onClose}>
+          <Button onClick={onClose}>
             {t('configPanel.cancel')}
-          </button>
-          <button className="button primary" onClick={handleSave}>
+          </Button>
+          <Button type="primary" onClick={handleSave}>
             {t('configPanel.save')}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

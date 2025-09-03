@@ -13,6 +13,10 @@ import './App.css';
 // 初始化i18n
 import './i18n/config';
 
+// 引入Ant Design组件
+import { Button, Switch, ColorPicker, Slider, Select, InputNumber } from 'antd';
+import type { SliderSingleProps } from 'antd';
+
 const defaultConfig: AppConfig = {
   visualConfig: {
     showWeekends: true,
@@ -21,7 +25,7 @@ const defaultConfig: AppConfig = {
     freeTimeOpacity: 0.3,
     gridLines: true,
     showTimeLabels: true,
-    colorScheme: 'original' // 默认使用原始配色方案
+    colorScheme: 'original'
   },
   dataConfig: {
     enableLocalStorage: false,

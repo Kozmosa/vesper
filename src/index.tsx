@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 
+// 引入Ant Design样式
+import 'antd/dist/reset.css';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

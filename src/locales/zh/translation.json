@@ -5,6 +5,7 @@
   },
   "fileUpload": {
     "dropFiles": "拖放课表文件到这里或点击浏览",
+    "browse": "浏览",
     "supportedFormats": "支持 .wakeup_schedule 和 .json 文件",
     "loadedSchedules": "已加载的课表",
     "courses": "课程",

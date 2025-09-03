@@ -5,6 +5,7 @@
   },
   "fileUpload": {
     "dropFiles": "Drop schedule files here or click to browse",
+    "browse": "Browse",
     "supportedFormats": "Supports .wakeup_schedule and .json files",
     "loadedSchedules": "Loaded Schedules",
     "courses": "courses",
