@@ -113,6 +113,8 @@ export interface ProcessedSchedule {
   courses: ProcessedCourse[];
   scheduleEntries: ProcessedScheduleEntry[];
   weeklySchedule: WeeklySchedule;
+  // 保存原始数据以支持重新处理
+  rawData: RawScheduleData;
 }
 
 export interface WeeklySchedule {
@@ -145,7 +147,11 @@ export interface VisualConfig {
   freeTimeOpacity: number;
   gridLines: boolean;
   showTimeLabels: boolean;
+  colorScheme: ColorScheme; // 新增配色方案选项
 }
+
+// 新增配色方案类型
+export type ColorScheme = 'original' | 'rainbow' | 'pastel' | 'professional' | 'warm' | 'cool';
 
 export interface DataConfig {
   enableLocalStorage: boolean;

@@ -20,7 +20,8 @@ const defaultConfig: AppConfig = {
     highlightColor: '#4CAF50',
     freeTimeOpacity: 0.3,
     gridLines: true,
-    showTimeLabels: true
+    showTimeLabels: true,
+    colorScheme: 'original' // 默认使用原始配色方案
   },
   dataConfig: {
     enableLocalStorage: false,
@@ -72,7 +73,7 @@ function App() {
       for (const file of files) {
         const content = await file.text();
         const rawData: RawScheduleData = processor.parseRawData(content);
-        const processed = processor.processSchedule(rawData, file.name);
+        const processed = processor.processSchedule(rawData, file.name, config.visualConfig.colorScheme);
         newSchedules.push(processed);
       }
 
@@ -99,6 +100,27 @@ function App() {
   };
 
   const handleConfigUpdate = (newConfig: AppConfig) => {
+    // 如果配色方案更改，需要重新处理所有课程数据
+    if (newConfig.visualConfig.colorScheme !== config.visualConfig.colorScheme) {
+      const updatedSchedules = schedules.map(schedule => {
+        // 检查原始数据是否存在
+        if (!schedule.rawData) {
+          console.error('原始数据不存在:', schedule);
+          return schedule; // 如果没有原始数据，返回原计划
+        }
+        
+        try {
+          // 使用原始数据重新处理课表以应用新的配色方案
+          return processor.processSchedule(schedule.rawData, schedule.fileName, newConfig.visualConfig.colorScheme);
+        } catch (error) {
+          console.error('重新处理课表时出错:', error);
+          return schedule; // 如果处理失败，返回原计划
+        }
+      });
+      
+      setSchedules(updatedSchedules);
+    }
+    
     setConfig(newConfig);
     
     if (storagePermissionGranted && config.dataConfig.enableLocalStorage) {

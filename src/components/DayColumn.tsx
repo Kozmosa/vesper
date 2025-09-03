@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ProcessedSchedule, VisualConfig, TimeRange, VisualizationBounds } from '../types';
+import { mergeOverlappingCourses, getMergedBlockDisplayName, getMergedBlockDisplayRoom, getMergedBlockColor } from '../utils/CourseMerger';
 import './DayColumn.css';
 
 interface DayColumnProps {
@@ -34,6 +35,9 @@ export const DayColumn: React.FC<DayColumnProps> = ({
     schedule.weeklySchedule[day]?.entries || []
   );
 
+  // 合并重叠的课程块
+  const mergedCourseBlocks = mergeOverlappingCourses(allOccupiedSlots);
+
   return (
     <div className="day-column">
       <div className="day-content">
@@ -49,24 +53,32 @@ export const DayColumn: React.FC<DayColumnProps> = ({
           </div>
         )}
 
-        {/* Render occupied time blocks */}
-        {allOccupiedSlots.map((entry, index) => (
-          <div
-            key={`${entry.id}-${index}`}
-            className="occupied-block"
-            style={{
-              top: `${calculatePosition(entry.startTime)}%`,
-              height: `${calculateHeight(entry.startTime, entry.endTime)}%`,
-              backgroundColor: entry.color,
-            }}
-            title={`${entry.courseName}\n${entry.room}`}
-          >
-            <div className="course-name">{entry.courseName}</div>
-            <div className="course-details">
-              <div className="room">{entry.room}</div>
+        {/* Render merged occupied time blocks */}
+        {mergedCourseBlocks.map((block, index) => {
+          const displayName = getMergedBlockDisplayName(block);
+          const displayRoom = getMergedBlockDisplayRoom(block);
+          const blockColor = getMergedBlockColor(block);
+          
+          return (
+            <div
+              key={`merged-${index}`}
+              className="occupied-block"
+              style={{
+                top: `${calculatePosition(block.startTime)}%`,
+                height: `${calculateHeight(block.startTime, block.endTime)}%`,
+                backgroundColor: blockColor,
+              }}
+              title={block.courses.length === 1 ? `${displayName}\n${displayRoom}` : displayName}
+            >
+              <div className="course-name">{displayName}</div>
+              {block.courses.length === 1 && (
+                <div className="course-details">
+                  <div className="room">{displayRoom}</div>
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         {/* Render free time intersections */}
         {freeTimeRanges.map((range, index) => (

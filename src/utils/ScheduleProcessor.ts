@@ -8,8 +8,10 @@ import {
   DaySchedule,
   TimeRange,
   FreeTimeIntersection,
-  VisualizationBounds
+  VisualizationBounds,
+  ColorScheme
 } from '../types';
+import { getColorForCourse } from './ColorSchemeManager';
 
 export class ScheduleProcessor {
   
@@ -39,7 +41,7 @@ export class ScheduleProcessor {
     }
   }
 
-  processSchedule(rawData: RawScheduleData, fileName: string): ProcessedSchedule {
+  processSchedule(rawData: RawScheduleData, fileName: string, colorScheme: ColorScheme = 'original'): ProcessedSchedule {
     const id = this.generateId();
     const startDate = new Date(rawData.tableConfig.startDate);
     
@@ -50,7 +52,8 @@ export class ScheduleProcessor {
     const { courses, scheduleEntries } = this.processCoursesAndEntries(
       rawData.courses,
       rawData.scheduleEntries,
-      timeSlots
+      timeSlots,
+      colorScheme
     );
 
     // Build weekly schedule
@@ -64,7 +67,8 @@ export class ScheduleProcessor {
       timeSlots,
       courses,
       scheduleEntries,
-      weeklySchedule
+      weeklySchedule,
+      rawData // 保存原始数据
     };
   }
 
@@ -88,7 +92,8 @@ export class ScheduleProcessor {
   private processCoursesAndEntries(
     rawCourses: any[],
     rawEntries: any[],
-    timeSlots: ProcessedTimeSlot[]
+    timeSlots: ProcessedTimeSlot[],
+    colorScheme: ColorScheme
   ) {
     const scheduleEntries: ProcessedScheduleEntry[] = [];
     
@@ -104,6 +109,9 @@ export class ScheduleProcessor {
 
       const weeks = this.generateWeekRange(entry.startWeek, entry.endWeek);
 
+      // 使用配色方案获取课程颜色
+      const courseColor = colorScheme === 'original' ? course.color : getColorForCourse(course.courseName, colorScheme);
+
       scheduleEntries.push({
         id: this.generateId(),
         courseId: course.id,
@@ -116,7 +124,7 @@ export class ScheduleProcessor {
         room: entry.room,
         teacher: entry.teacher,
         weeks,
-        color: course.color
+        color: courseColor
       });
     });
 
@@ -293,6 +301,23 @@ export class ScheduleProcessor {
         }
       });
     });
+
+    // 应用时间范围限制：早于8点的起始时间fallback到8点，晚于23点的结束时间fallback到23点
+    const fallbackStart = new Date(earliestStart);
+    fallbackStart.setHours(8, 0, 0, 0);
+    
+    const fallbackEnd = new Date(latestEnd);
+    fallbackEnd.setHours(23, 0, 0, 0);
+    
+    // 如果计算出的起始时间早于8点，则使用8点作为起始时间
+    if (earliestStart < fallbackStart) {
+      earliestStart = fallbackStart;
+    }
+    
+    // 如果计算出的结束时间晚于23点，则使用23点作为结束时间
+    if (latestEnd > fallbackEnd) {
+      latestEnd = fallbackEnd;
+    }
 
     const totalMinutes = (latestEnd.getTime() - earliestStart.getTime()) / (1000 * 60);
 

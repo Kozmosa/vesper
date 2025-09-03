@@ -34,6 +34,15 @@
     "timeFormat12h": "12小时制",
     "highlightColor": "空闲时间高亮颜色",
     "freeTimeOpacity": "空闲时间透明度",
+    "colorScheme": "配色方案",
+    "colorSchemes": {
+      "original": "原始",
+      "rainbow": "彩虹",
+      "pastel": "柔和",
+      "professional": "专业",
+      "warm": "温暖",
+      "cool": "冷色"
+    },
     "dataSettings": "数据设置",
     "autoSave": "自动保存更改",
     "maxStoredSchedules": "最大存储课表数",

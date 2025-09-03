@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AppConfig } from '../types';
+import { AppConfig, ColorScheme } from '../types';
+import { getAvailableColorSchemes } from '../utils/ColorSchemeManager';
 import './ConfigPanel.css';
 
 interface ConfigPanelProps {
@@ -93,10 +94,26 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                 {t('configPanel.timeFormat')}:
                 <select
                   value={localConfig.visualConfig.timeFormat}
-                  onChange={(e) => updateVisualConfig('timeFormat', e.target.value)}
+                  onChange={(e) => updateVisualConfig('timeFormat', e.target.value as '12h' | '24h')}
                 >
                   <option value="24h">{t('configPanel.timeFormat24h')}</option>
                   <option value="12h">{t('configPanel.timeFormat12h')}</option>
+                </select>
+              </label>
+            </div>
+
+            <div className="config-item">
+              <label>
+                {t('configPanel.colorScheme')}:
+                <select
+                  value={localConfig.visualConfig.colorScheme}
+                  onChange={(e) => updateVisualConfig('colorScheme', e.target.value as ColorScheme)}
+                >
+                  {getAvailableColorSchemes().map(scheme => (
+                    <option key={scheme.id} value={scheme.id}>
+                      {t(`configPanel.colorSchemes.${scheme.id}`)}
+                    </option>
+                  ))}
                 </select>
               </label>
             </div>
