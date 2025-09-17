@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v4
       
     - name: Setup Node.js
@@ -33,12 +33,18 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm install --force
-      
-    - name: Build
-      run: CI=false npm run build
-      
-    - name: Upload build artifacts
+      run: |
+        echo "Installing dependencies with --force flag due to peer dependency conflicts..."
+        npm install --force
+        
+    - name: Build React application
+      run: |
+        echo "Building React application for production..."
+        CI=false npm run build
+        echo "Build completed successfully!"
+        ls -la build/
+        
+    - name: Upload build artifacts to GitHub Pages
       uses: actions/upload-pages-artifact@v3
       with:
         path: ./build
@@ -58,3 +64,8 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+      
+    - name: Display deployment URL
+      run: |
+        echo "🚀 Deployment successful!"
+        echo "📖 Your site is now available at: ${{ steps.deployment.outputs.page_url }}"
